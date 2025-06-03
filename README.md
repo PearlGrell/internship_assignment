@@ -156,15 +156,15 @@ lib/
 
 ## 📦 Dependencies
 
-| Package                                                       | Description                                    |                                                                   |
-| ------------------------------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------- |
-| [flutter\_bloc](https://pub.dev/packages/flutter_bloc)        | State management using BLoC pattern.           |                                                                   |
-| [dio](https://pub.dev/packages/dio)                           | HTTP client for API interactions.              |                                                                   |
-| [hive\_ce](https://pub.dev/packages/hive_ce)                  | Lightweight and fast key-value database.       |                                                                   |
-| [hive\_ce\_flutter](https://pub.dev/packages/hive_ce_flutter) | Hive integration for Flutter.                  |                                                                   |
-| [json\_annotation](https://pub.dev/packages/json_annotation)  | Annotations for JSON serialization.            |                                                                   |
-| [shimmer](https://pub.dev/packages/shimmer)                   | Provides shimmer loading effect.               |                                                                   |
-| [intl](https://pub.dev/packages/intl)                         | Internationalization and localization support. |                                                                   |
+| Package                                                       | Description                                    |                                                                   
+| ------------------------------------------------------------- | ---------------------------------------------- | 
+| [flutter\_bloc](https://pub.dev/packages/flutter_bloc)        | State management using BLoC pattern.           |                                                                   
+| [dio](https://pub.dev/packages/dio)                           | HTTP client for API interactions.              |                                                                   
+| [hive\_ce](https://pub.dev/packages/hive_ce)                  | Lightweight and fast key-value database.       |                                                                   
+| [hive\_ce\_flutter](https://pub.dev/packages/hive_ce_flutter) | Hive integration for Flutter.                  |                                                                   
+| [json\_annotation](https://pub.dev/packages/json_annotation)  | Annotations for JSON serialization.            |                                                                   
+| [shimmer](https://pub.dev/packages/shimmer)                   | Provides shimmer loading effect.               |                                                                   
+| [intl](https://pub.dev/packages/intl)                         | Internationalization and localization support. |                                                                   
 | [lucide\_icons](https://pub.dev/packages/lucide_icons)        | Icon pack for Flutter.                         | 
 
 
