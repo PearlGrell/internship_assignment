@@ -165,7 +165,7 @@ lib/
 | [json\_annotation](https://pub.dev/packages/json_annotation)  | Annotations for JSON serialization.            |                                                                   |
 | [shimmer](https://pub.dev/packages/shimmer)                   | Provides shimmer loading effect.               |                                                                   |
 | [intl](https://pub.dev/packages/intl)                         | Internationalization and localization support. |                                                                   |
-| [lucide\_icons](https://pub.dev/packages/lucide_icons)        | Icon pack for Flutter.                         | ([pub.dev][7], [medium.com][8], [medium.com][9], [reddit.com][3]) |
+| [lucide\_icons](https://pub.dev/packages/lucide_icons)        | Icon pack for Flutter.                         | 
 
 
 ---
