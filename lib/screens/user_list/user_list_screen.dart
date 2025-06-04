@@ -72,7 +72,7 @@ class _UserListScreenState extends State<UserListScreen> {
   /// /// and if so, it triggers the loading of more users by dispatching the LoadMoreUsersEvent.
   void _handleScroll() {
     if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 300) {
+        _scrollController.position.maxScrollExtent - 100) {
       final state = _userBloc.state;
       final shouldPaginate = state is UserLoaded && !state.hasReachedMax;
       if (shouldPaginate) _userBloc.add(LoadMoreUsersEvent());
@@ -180,6 +180,7 @@ class _UserListScreenState extends State<UserListScreen> {
           state is UserLoaded
               ? state.hasReachedMax
               : (state as UserPaginationLoading).hasReachedMax;
+      print("Users loaded: ${users.length}, Has reached max: $hasReachedMax");
       return _buildLoadedList(users, hasReachedMax);
     } else if (state is UserSearching) {
       return _buildSearchedList(state);

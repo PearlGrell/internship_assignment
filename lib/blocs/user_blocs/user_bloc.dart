@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internship_assignment/models/user/user_model.dart';
 import 'package:internship_assignment/blocs/user_blocs/user_events.dart';
 import 'package:internship_assignment/blocs/user_blocs/user_state.dart';
 import 'package:internship_assignment/services/user_service.dart';
@@ -30,6 +31,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   bool isFetching = false;
   // Search query for user search functionality
   String searchQuery = '';
+
+  // Variables to hold state before search
+  List<User> _usersBeforeSearch = [];
+  int _skipBeforeSearch = 0;
+  bool _hasReachedMaxBeforeSearch = false;
 
   /// Constructor for UserBloc
   /// Initializes the bloc with a UserService instance and sets the initial state.
@@ -92,13 +98,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         return;
       }
 
-      if (users.length < limit) {
-        emit(UserPaginationLoading(
-          users: currentState.users,
-          hasReachedMax: true,
-        ));
-        return;
-      }
       final updatedUsers = [...currentState.users, ...users];
 
       emit(
@@ -125,16 +124,43 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     SearchUsersEvent event,
     Emitter<UserState> emit,
   ) async {
-    searchQuery = event.query;
-    emit(UserLoading());
+    final newSearchQuery = event.query;
+
+    if (newSearchQuery.isEmpty) {
+      // User cleared the search query
+      searchQuery = ''; // Reset the bloc's internal search query state
+
+      // NEW: If we had a previous paginated list saved, restore it.
+      if (_usersBeforeSearch.isNotEmpty) {
+        skip = _skipBeforeSearch; // Restore the skip value from before search
+        emit(UserLoaded(users: _usersBeforeSearch, hasReachedMax: _hasReachedMaxBeforeSearch));
+        // Clear the saved state as it's now restored
+        _usersBeforeSearch = [];
+        _skipBeforeSearch = 0;
+        _hasReachedMaxBeforeSearch = false;
+      } else {
+        // If no previous state was saved (e.g., search was initiated from initial state),
+        // or a full refresh occurred, perform a full refresh to get the initial list.
+        add(FetchUsersEvent(isRefresh: true));
+      }
+      return; // Handled the empty query case
+    }
+
+    // A new search query is provided and it's not empty
+    if (searchQuery != newSearchQuery) {
+      // This is a new search query (or a modification to an existing one).
+      if (state is UserLoaded) {
+        final currentState = state as UserLoaded;
+        _usersBeforeSearch = List.from(currentState.users); // Save a copy of the current users
+        _skipBeforeSearch = skip; // Save the current skip value
+        _hasReachedMaxBeforeSearch = currentState.hasReachedMax;
+      }
+      searchQuery = newSearchQuery; // Update the bloc's internal search query
+    }
+
+    emit(UserLoading()); // Indicate loading for the search operation
 
     try {
-
-      if (searchQuery.isEmpty) {
-        add(FetchUsersEvent(isRefresh: true));
-        return;
-      }
-
       final users = await userService.searchUsers(username: searchQuery);
       emit(UserSearching(searchedUsers: users, query: searchQuery));
     } catch (e) {
